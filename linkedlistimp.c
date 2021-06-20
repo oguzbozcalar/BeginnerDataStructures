@@ -1,5 +1,5 @@
-#include<stdio.h>
 #include<stdlib.h>
+#include<stdio.h>
 
 struct node
 {
@@ -80,6 +80,7 @@ void printdata ()
 
 
 }
+
 
 void insertAtSpesificPos (int x, int pos)
 {
