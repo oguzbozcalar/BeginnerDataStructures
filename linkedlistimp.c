@@ -1,5 +1,5 @@
-#include<stdlib.h>
 #include<stdio.h>
+#include<stdlib.h>
 
 struct node
 {
@@ -29,10 +29,10 @@ void add (int x)
     {
       temp = head;
       while (temp->next != NULL)
-	{
-	  temp = temp->next;
+    {
+      temp = temp->next;
 
-	}
+    }
       temp->next = newnode;
       newnode->next = NULL;
     }
@@ -68,23 +68,36 @@ void insertAtEnd (int x)
 
 void printdata ()
 {
-  count = 0;
+  
   temp = head;
 
   while (temp != NULL)
     {
       printf ("%d ", temp->data);
       temp = temp->next;
-      count++;
+     
     }
-
 
 }
 
+int lengthOfLinkedList(){
+    
+    count = 0;
+    temp = head;
+
+  while (temp != NULL)
+    {
+      temp = temp->next;
+      count++;
+    }
+    
+    return count;
+}
 
 void insertAtSpesificPos (int x, int pos)
 {
-  if (pos == count + 1)
+    int c=lengthOfLinkedList();
+  if (pos == c + 1)
     insertAtEnd (x);
   else if (pos == 1)
     insertAtBeginning (x);
@@ -96,13 +109,86 @@ void insertAtSpesificPos (int x, int pos)
       newnode->data = x;
       pos -= 2;
       while (pos--)
-	{
-	  temp = temp->next;
-	}
+    {
+      temp = temp->next;
+    }
       newnode->next = temp->next;
       temp->next = newnode;
     }
 
+}
+
+void delAtBegin(){
+    
+    temp=head;
+    head=head->next;
+    free(temp);
+    
+}
+
+
+void delAtEnd(){
+   
+    int c=lengthOfLinkedList();
+    if(c==1)
+    {
+        temp=head;
+        free(temp);
+        head=NULL;
+    }
+    else{
+        
+    temp=head;
+    struct node *temp2;
+    temp2=head;
+    
+    while(temp2->next->next!=NULL)
+        temp2=temp2->next;
+    
+    while(temp->next!=NULL)
+        temp=temp->next;
+    
+    
+    temp2->next=NULL;
+    free(temp);
+    }
+    
+}
+
+void delAtSpecPos(int pos){
+    
+    temp=head;
+    int c=lengthOfLinkedList();
+    
+    if(c==pos){
+        delAtEnd();
+        
+    }
+    else if(pos==1){
+        delAtBegin();
+    }
+    
+    else
+    {
+        
+    int i=1;
+    struct node *nextnode;
+    temp=head;
+    
+    
+    while(i<pos-1){
+        temp=temp->next;
+        i++;
+    }
+    
+    nextnode=temp->next;
+   
+    
+    temp->next=nextnode->next;
+    free(nextnode);
+    
+    }
+    
 }
 
 
@@ -111,38 +197,57 @@ int main ()
 {
 
 
+  add (1);
+  add (2);
+  add (3);
+  printdata ();
+  printf ("\n***********************************\n");
+  insertAtBeginning (0);
+  printdata ();
+  printf ("\n***********************************\n");
+  insertAtBeginning (-1);
+  printdata ();
+  printf ("\n***********************************\n");
+  insertAtEnd (4);
+  printdata ();
+  printf ("\n***********************************\n");
   add (5);
-  add (6);
-  add (7);
   printdata ();
   printf ("\n***********************************\n");
-  insertAtBeginning (4);
-  printdata ();
+  insertAtSpesificPos(9,2);
+  printdata();
   printf ("\n***********************************\n");
-  insertAtBeginning (3);
-  printdata ();
+  insertAtSpesificPos(6,6);
+  printdata();
   printf ("\n***********************************\n");
-  insertAtEnd (8);
-  printdata ();
+  insertAtSpesificPos(9,9);
+  printdata();
   printf ("\n***********************************\n");
-  add (9);
-  printdata ();
+  insertAtSpesificPos(-2,1);
+  printdata();
   printf ("\n***********************************\n");
-  insertAtSpesificPos (1, 3);
-  printdata ();
+  delAtEnd();
+  printdata();
   printf ("\n***********************************\n");
-  insertAtSpesificPos (4, 7);
-  printdata ();
-  printf ("Legth:%d", count);
+  delAtBegin();
+  printdata();
   printf ("\n***********************************\n");
-  insertAtSpesificPos (10, 10);
-  printdata ();
+  delAtSpecPos(1);
+  printdata();
   printf ("\n***********************************\n");
-  insertAtSpesificPos (11, 1);
-  printdata ();
+  delAtSpecPos(8);
+  printdata();
   printf ("\n***********************************\n");
+  delAtSpecPos(4);
+  printdata();
+  printf ("\n***********************************\n");
+  delAtSpecPos(5);
+  printdata();
+  printf ("\n***********************************\n");
+
 
 
 
   return 0;
 }
+
